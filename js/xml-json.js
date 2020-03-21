@@ -15,8 +15,16 @@
 //   }
 // }
 
+const fs = require('fs'), xml2js = require('xml2js')
+const parser = new xml2js.Parser()
 
-const convert = require('xml-js')
-const xml = require('fs').readFileSync('Google_Product_Feed_File_V3.1xml', 'utf8');
-const options = {ignoreComment: true, alwaysChildren: true};
-const xmlData = require('../data/Google_Product_Feed_File_Yogi_V7.0.xml');
+fs.readFile(__dirname + '../data/Google_Product_Feed_File_Yogi_V7.0.xml',
+    function(err, data) {
+      parser.parseString(data, function(err, result) {
+        console.log(JSON.stringify(result))
+        // result ? console.log(true, result) : console.log(false)
+        // console.log(err)
+        console.log('DONE')
+      })
+    }
+  )
