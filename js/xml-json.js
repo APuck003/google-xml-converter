@@ -1,27 +1,22 @@
-const xmlToJson = (xml) => {
-  let obj = {};
-  
-  if (xml.nodeType === 1) {
-    // element
-    // do attributes
-    if (xml.attributes.length > 0) {
-      obj["@attributes"] = {};
-      for (let j = 0; j < xml.attributes.length; j++) {
-        let attribute = xml.attributes.item(j);
-        obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-      }
-    }
-  } else if (xml.nodeType === 3) {
-    // obj = xml.nodeValue;
-  }
-  
-  
-  return obj;
-}
+// const myJson = {
+//   "item": {
+//     "id": null,
+//     "title": null,
+//     "description": null,
+//     "link": null,
+//     "image_link": null,
+//     "availability": null,
+//     "price": null,
+//     "google_product_category": null,
+//     "product_type": null,
+//     "gtin": null,
+//     "item_group_id": null,
+//     "shipping_weight": null,
+//   }
+// }
 
 
-function printOutput(output){
-  
-  document.getElementById("output").value = JSON.stringify(output, null, 4)
-  
-}
+const convert = require('xml-js')
+const xml = require('fs').readFileSync('Google_Product_Feed_File_V3.1xml', 'utf8');
+const options = {ignoreComment: true, alwaysChildren: true};
+const xmlData = require('../data/Google_Product_Feed_File_Yogi_V7.0.xml');

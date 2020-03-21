@@ -4,7 +4,7 @@ const options = {ignoreComment: true, alwaysChildren: true};
 const result = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
 
 // Step 1
-const xmlData = recquire('/Google_Product_Feed_File_V3.1xml');
+const xmlData = require('/Google_Product_Feed_File_V3.1xml');
 // const parsedXml = xml.parseXML( xml )np
 // Step 2
 // Store data in a variable that consumes XML

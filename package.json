@@ -1,0 +1,7 @@
+{
+  "name": "google-xml-converter",
+  "version": "1.0.0",
+  "dependencies": {
+    "xml-js": "latest"
+  }
+}
