@@ -96,7 +96,7 @@ const run = () => {
   return product
 }
 
-fs.writeFile('newJsonFile.json', JSON.stringify(run()), function(err, result) {
+fs.writeFile('newJsonFile.json', JSON.stringify(run(), null, 2), function(err, result) {
   if (err) console.log('error', err)
 })
 // console.timeEnd()
