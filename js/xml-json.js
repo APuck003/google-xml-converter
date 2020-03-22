@@ -1,19 +1,5 @@
-const fs = require('fs'), xml2js = require('xml2js')
-const parser = new xml2js.Parser()
+const fs = require('fs')
 
-
-
-// const runScript = (script_src) => {
-//   let div = document.getElementsByClassName('dynamic_data')
-//   let script = document.createElement('script')
-//
-//   script.type = 'text/javascript'
-//   script.src = script_src
-//
-//   div.appendChild(script)
-// }
-
-// Separate method that's more specific without using library - needs cleaning
 const parseXML = () => {
   let file = fs.readFileSync(__dirname + '/../data/Google_Product_Feed_File_Yogi_V7.0.xml').toString()
   const itemArr = file.split('<item>')
@@ -58,19 +44,12 @@ const parseXML = () => {
         if (itemChild[j] === 'g:availability') {
           itemObj.availability = itemChild[(j + 1)]
         }
-        // if (itemChild[j] === 'g:price') {
-        //   itemObj.price = itemChild[(j + 1)]
-        // }
         if (itemChild[j] === 'g:google_product_category') {
           itemObj.google_product_category = itemChild[(j + 1)]
         }
         if (itemChild[j] === 'g:product_type') {
-          // itemObj.google_product_category.product_type = itemChild[(j + 1)]
           itemObj.product_type = itemChild[(j + 1)]
         }
-        // if (itemChild[j] === 'g:gtin') {
-        //   itemObj.gtin = itemChild[(j + 1)]
-        // }
         if (itemChild[j] === 'g:item_group_id') {
           itemObj.item_group_id = itemChild[(j + 1)]
         }
@@ -84,17 +63,7 @@ const parseXML = () => {
   return product
 }
 
-
 fs.writeFile('newJsonFile.json', JSON.stringify(parseXML(), null, 2), function(err, result) {
   if (err) console.log('error', err)
 })
 
-// button.addEventListener('click', function () {
-//   fs.writeFile('newJsonFile.json', JSON.stringify(run(), null, 2), function(err, result) {
-//     if (err) console.log('error', err)
-//   })
-// })
-
-// const convertTOJSON =
-
-// parseXML()

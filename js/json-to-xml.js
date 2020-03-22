@@ -1,9 +1,3 @@
-// const fs = require('fs')
-// let jsonFile = require('./newJsonFile')
-// console.log(jsonFile[1])
-// const objectArray = Object.values(jsonFile)[1]
-// const keyValArrays = Object.entries(objectArray)
-
 (function($){
   $.ajax({
     type: "GET",
@@ -16,23 +10,9 @@
 
 })(jQuery);
 
-// const itemsAsXMLTags = keyValArrays.map((k) => {
-//   // const arr = []
-//   // if (k[0] !== 'google_product_category') {
-//   //   arr.push(`<g:${k[0]}>${k[1]}</g:${k[0]}>`)
-//   // } else {
-//   //   arr.push(JSON.stringify(`<g:${k[0]}>${k[1]}</g:${k[0]}>`))
-//   // }
-//   return `<g:${k[0]}>${k[1]}</g:${k[0]}>`
-// })
-//
-// console.log(itemsAsXMLTags)
-
 const mapDatafromJson = (jsonFile) => {
-// const mapDatafromJson = (objectArray) => {
   
   const data = jsonFile.map((data) => {
-  // const data = objectArray.map((data) => {
     const codeElement = document.querySelector('.xml')
     
     codeElement.innerText += `
@@ -50,9 +30,4 @@ const mapDatafromJson = (jsonFile) => {
       </item>
     `
   })
-  
-  // codeElement.innerText*/
 }
-
-// mapDatafromJson(jsonFile)
-// mapDatafromJson(objectArray)
