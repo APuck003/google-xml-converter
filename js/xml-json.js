@@ -74,11 +74,12 @@ const run = () => {
         // if (itemChild[j] === 'g:price') {
         //   itemObj.price = itemChild[(j + 1)]
         // }
-        if (itemChild[j] === '/g:google_product_category') {
-          itemObj.google_product_category = {}
+        if (itemChild[j] === 'g:google_product_category') {
+          itemObj.google_product_category = itemChild[(j + 1)]
         }
         if (itemChild[j] === 'g:product_type') {
-          itemObj.google_product_category.product_type = itemChild[(j + 1)]
+          // itemObj.google_product_category.product_type = itemChild[(j + 1)]
+          itemObj.product_type = itemChild[(j + 1)]
         }
         // if (itemChild[j] === 'g:gtin') {
         //   itemObj.gtin = itemChild[(j + 1)]
