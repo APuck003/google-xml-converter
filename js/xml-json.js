@@ -1,35 +1,20 @@
-// const jsonData = {
-//   "item": {
-//     "id": null,
-//     "title": null,
-//     "description": null,
-//     "link": null,
-//     "image_link": null,
-//     "availability": null,
-//     "price": null,
-//     "google_product_category": null,
-//     "product_type": null,
-//     "identifier_exists": null,
-//     "shipping_weight": null,
-//   }
-// }
-
-
 const fs = require('fs'), xml2js = require('xml2js')
 const parser = new xml2js.Parser()
 
-// fs.readFile(`${__dirname}/../data/Google_Product_Feed_File_Yogi_V7.0.xml`.toString(),
-//     function(err, data) {
-//       parser.parseString(data, function(err, result) {
-//         console.log(JSON.stringify(result, null, 4))
-//         // console.log(result)
-//         // console.log(util.inspect(result, false, null))
-//       })
-//     })
 
+
+// const runScript = (script_src) => {
+//   let div = document.getElementsByClassName('dynamic_data')
+//   let script = document.createElement('script')
+//
+//   script.type = 'text/javascript'
+//   script.src = script_src
+//
+//   div.appendChild(script)
+// }
 
 // Separate method that's more specific without using library - needs cleaning
-const run = () => {
+const parseXML = () => {
   let file = fs.readFileSync(__dirname + '/../data/Google_Product_Feed_File_Yogi_V7.0.xml').toString()
   const itemArr = file.split('<item>')
   let product = []
@@ -49,7 +34,9 @@ const run = () => {
         if (itemChild[j] === 'g:description') {
           let descArr = itemChild[(j + 1)].split([' '])
           let descStr = descArr.join(' ')
-          let firstClean = descStr.replace(/(\r\n|\n|\r)/gm, " ")
+          let cleanGreater = descStr.split("&gt;").join(">")
+          let cleanLesser = cleanGreater.split("&lt;").join("<")
+          let firstClean = cleanLesser.replace(/(\r\n|\n|\r)/gm, " ")
           let secondClean = firstClean.split(' ')
           let cleanArr = []
           for (let v = 0; v < secondClean.length; v++) {
@@ -97,7 +84,17 @@ const run = () => {
   return product
 }
 
-fs.writeFile('newJsonFile.json', JSON.stringify(run(), null, 2), function(err, result) {
+
+fs.writeFile('newJsonFile.json', JSON.stringify(parseXML(), null, 2), function(err, result) {
   if (err) console.log('error', err)
 })
-// console.timeEnd()
+
+// button.addEventListener('click', function () {
+//   fs.writeFile('newJsonFile.json', JSON.stringify(run(), null, 2), function(err, result) {
+//     if (err) console.log('error', err)
+//   })
+// })
+
+// const convertTOJSON =
+
+// parseXML()

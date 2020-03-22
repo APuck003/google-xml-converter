@@ -1,9 +1,20 @@
 // const fs = require('fs')
-let jsonFile = require('../newJsonFile')
+// let jsonFile = require('./newJsonFile')
 // console.log(jsonFile[1])
 // const objectArray = Object.values(jsonFile)[1]
 // const keyValArrays = Object.entries(objectArray)
 
+(function($){
+  $.ajax({
+    type: "GET",
+    url: 'js/newJsonFile.json',
+    dataType: "json",
+    success: function (data) {
+      mapDatafromJson(data)
+    }
+  })
+
+})(jQuery);
 
 // const itemsAsXMLTags = keyValArrays.map((k) => {
 //   // const arr = []
@@ -22,9 +33,9 @@ const mapDatafromJson = (jsonFile) => {
   
   const data = jsonFile.map((data) => {
   // const data = objectArray.map((data) => {
-    // const div = document.createElement('div')
+    const codeElement = document.querySelector('.xml')
     
-    console.log(`
+    codeElement.innerText += `
       <item>
       <g:id>  ${data.id} </g:id>
       <g:title>  ${data.title} </g:title>
@@ -37,9 +48,11 @@ const mapDatafromJson = (jsonFile) => {
       <g:item_group_id >${data.item_group_id}</g:item_group_id>
       <g:shipping_weight >${data.shipping_weight}</g:shipping_weight>
       </item>
-    `)
+    `
   })
+  
+  // codeElement.innerText*/
 }
 
-mapDatafromJson(jsonFile)
+// mapDatafromJson(jsonFile)
 // mapDatafromJson(objectArray)
