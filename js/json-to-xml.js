@@ -1,7 +1,7 @@
 (function($){
   $.ajax({
     type: "GET",
-    url: 'js/newJsonFile.json',
+    url: 'newJsonFile.json',
     dataType: "json",
     success: function (data) {
       mapDatafromJson(data)
