@@ -1,11 +1,11 @@
 const fs = require('fs')
 
 const parseXML = () => {
-  let file = fs.readFileSync(__dirname + '/data/Google_Product_Feed_File_Yogi_V7.0.xml').toString()
+  let file = fs.readFileSync(__dirname + '/data/Google_Product_Feed_File_Meat_Yogi_23_march.xml').toString().trim()
   const itemArr = file.split('<item>')
   let product = []
   
-  for (let i = 0; i < itemArr.length; i++) {
+  for (let i = 1; i < itemArr.length; i++) {
     if (itemArr[i]) {
       let itemObj = {}
       let itemChild = itemArr[i].split(/[<>]+/)
@@ -22,7 +22,9 @@ const parseXML = () => {
           let descStr = descArr.join(' ')
           let cleanGreater = descStr.split("&gt;").join(">")
           let cleanLesser = cleanGreater.split("&lt;").join("<")
-          let firstClean = cleanLesser.replace(/(\r\n|\n|\r)/gm, " ")
+          let cleanAnd = cleanLesser.split("&amp;").join("&")
+          let cleanBrOpenTag = cleanAnd.split("<br /><br />").join("")
+          let firstClean = cleanBrOpenTag.replace(/(\r\n|\n|\r)/gm, " ")
           let secondClean = firstClean.split(' ')
           let cleanArr = []
           for (let v = 0; v < secondClean.length; v++) {
@@ -60,10 +62,11 @@ const parseXML = () => {
       product.push(itemObj)
     }
   }
+  console.log(typeof product)
   return product
 }
 
-fs.writeFile('newJsonFile.json', JSON.stringify(parseXML(), null, 2), function(err, result) {
+fs.writeFile('newJsonFile.json', JSON.stringify(parseXML(), null, 2).trim(), function(err, result) {
   // console.log('I was hit')
   if (err) console.log('error', err)
 })
