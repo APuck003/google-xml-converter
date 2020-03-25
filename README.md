@@ -3,12 +3,10 @@ Consumes xml file - then converts to JSON - outputs html formatted as xml
 
 Save XML file in data directory then enter correct path to file in xml-json.js on line 4.
 
-In your Terminal type npm start then press enter.
+In your Terminal type "npm run convert" then press enter. To generate new JSON file from XML data. 
 
 The newJsonFile.json will then be generated and placed in root directory to manipulate data in JSON format
 
-Go back into your Terminal and cd into the js folder.
+Once JSON file is updated, Go back into your Terminal and run "npm start".
 
-Type node json-to-xml.js
-
-Then open index.html to view altered data as xml to copy/paste
+This will start your server at URI http://localhost:4000/ - go to that link to view updated data on the page.
