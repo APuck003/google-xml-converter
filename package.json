@@ -1,14 +1,19 @@
 {
-  "name": "google-xml-converter",
+  "name": "server",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node js/xml-json.js"
+    "start": "node index.js",
+    "convert": "node xml-to-json.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "xml-js": "latest",
-    "xml2js": "^0.4.23"
-  },
-  "devDependencies": {
-    "node": "^13.10.1"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1"
   }
 }

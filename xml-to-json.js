@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const parseXML = () => {
-  let file = fs.readFileSync(__dirname + '/../data/Google_Product_Feed_File_Yogi_V7.0.xml').toString()
+  let file = fs.readFileSync(__dirname + '/data/Google_Product_Feed_File_Yogi_V7.0.xml').toString()
   const itemArr = file.split('<item>')
   let product = []
   
@@ -64,6 +64,6 @@ const parseXML = () => {
 }
 
 fs.writeFile('newJsonFile.json', JSON.stringify(parseXML(), null, 2), function(err, result) {
+  // console.log('I was hit')
   if (err) console.log('error', err)
 })
-
