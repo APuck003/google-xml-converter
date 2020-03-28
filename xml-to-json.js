@@ -13,13 +13,15 @@ const parseXML = () => {
   
   let defaultObj = {
     id: 'id',
-    title: `https://www.marxfoods.com/${'REPLACE ME'}`,
-    description: `https://www.marxfoods.com/${'temp title'}`,
+    title: undefined,
+    description: undefined,
     link: 'link',
-    image_link: `href"/www.ekrelerjk/${'TITLE'}`,
+    image_link: undefined,
     availability: 'availability',
+    price: 'price',
     google_product_category: 'google product category',
     product_type: 'product type',
+    identifier_exists: 'yes/no',
     item_group_id: 'item group id',
     shipping_weight: 'shipping weight'
   }
@@ -27,6 +29,7 @@ const parseXML = () => {
   
   const itemArr = file.split('<item>')
   let product = []
+  // let product = {}
   
   for (let i = 1; i < itemArr.length; i++) {
     // console.log('itemArr['+i+']: ', itemArr[0]);
@@ -82,6 +85,10 @@ const parseXML = () => {
           itemObj.availability = itemChild[(j + 1)]
           // console.log('availability: ', itemObj.availability);
         }
+        if (itemChild[j] === 'g:price') {
+          itemObj.price = itemChild[(j + 1)]
+          // console.log('price: ', itemObj.price)
+        }
         if (itemChild[j] === 'g:google_product_category') {
           itemObj.google_product_category = itemChild[(j + 1)]
           // console.log('google_product_category: ', itemObj.google_product_category);
@@ -103,18 +110,34 @@ const parseXML = () => {
           // console.log('shipping_weight: ', itemObj.shipping_weight);
         }
       }
-      
-      let mergeObj = {}
-      
-      for (let attrname in defaultObj) { mergeObj[attrname] = defaultObj[attrname]; }
-      for (let attrname in itemObj) { mergeObj[attrname] = itemObj[attrname]; }
-      
-      product.push(mergeObj)
-      
+    let mergeObj = {}
+  
+    let linkEndParse = itemObj.link.indexOf('?')
+    let linkSlug = itemObj.link.slice(26, linkEndParse).replace(/-/g, " ")
+    
+    for (let attrname in defaultObj) {
+        mergeObj[attrname] = defaultObj[attrname];
+    }
+  
+    for (let attrname in itemObj) {
+      mergeObj[attrname] = itemObj[attrname];
+    }
+  
+    if (mergeObj.title === undefined || mergeObj.description === undefined) {
+      mergeObj['title'] = linkSlug
+      mergeObj['description'] = linkSlug
+    }
+
+    if (mergeObj.image_link === undefined) {
+      mergeObj['image_link'] = `www.ekrelerjk/${mergeObj.title.replace(/ /g, "-")}`
+    }
+    
+    product.push(mergeObj)
+    
     }
   }
-
-// console.log(product);
+  
+  // console.log(product)
   return product
 
 }

@@ -34,6 +34,7 @@ const mapDatafromJson = (jsonFile) => {
         &lt;g:link&gt;${data.link}&lt;/g:link&gt;
         &lt;g:image_link&gt;${data.image_link}&lt;/g:image_link&gt;
         &lt;g:availability&gt;${data.availability}&lt;/g:availability&gt;
+        &lt;g:price&gt;${data.price}&lt;/g:price&gt;
         &lt;g:google_product_category&gt;${data.google_product_category}&lt;/g:google_product_category&gt;
         &lt;g:product_type&gt;${data.product_type}&lt;/g:product_type&gt;
         &lt;g:identifier_exists&gt;${data.identifier_exists}&lt;/g:identifier_exists&gt;
