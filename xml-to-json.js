@@ -6,10 +6,54 @@ const fs = require('fs')
 // if NO descrition { take tile from slug  https://www.marxfoods.com/ and after "/" becomes temp title}
 // if NO data.id || NO data.title || NO data.descrition {}
 
+// New Requirements:
+// fix image_link tag
+// abstract if/else into functional paradigm.
+
 const parseXML = () => {
   
   let file = fs.readFileSync(__dirname + '/data/Google_Product_Feed_File_Meat_Yogi_23_march.xml').toString().trim()
   
+//   let file = `
+// <item>
+//     <g:id>25221</g:id>
+//     <g:link>https://www.marxfoods.com/Grassfed-Wagyu-Beef-Burgers?custcolmtxinv&#x3D;68</g:link>
+//     <g:image_link>https://www.marxfoods.com/images/Grassfed-Wagyu-Beef-Burgers_Grass-fedWagyuBeefBurgers-1.jpg</g:image_link>
+//     <g:availability>in stock</g:availability>
+//     <g:price>125 USD</g:price>
+//     <g:google_product_category>Food, Beverages &amp; Tobacco &amp;gt; Food Items &amp;gt; Meat, Seafood &amp; Eggs &amp;gt; Meat</g:google_product_category>
+//     <g:product_type>Food, Beverages &amp; Tobacco &amp;gt; Food Items &amp;gt; Meat, Seafood &amp; Eggs &amp;gt; Meat</g:product_type>
+//     <g:identifier_exists>No</g:identifier_exists>
+//     <g:item_group_id>25220</g:item_group_id>
+//     <g:shipping_weight>1 lb</g:shipping_weight>
+// </item>
+//
+// <item>
+//     <g:id>24352</g:id>
+//     <g:title>Wagyu Beef Outer Skirt Steaks</g:title>
+//     <g:description>Skirt steaks are a long, thin cut from the plate primal. They offer bold, beefy flavor at a more affordable price than highly prized ribeyes, tenderloins, etc. Inner skirt steaks are the quintessential fajita cut, while outer skirt steaks are more highly prized and usually served sliced as a center-of-plate steak rather than as an ingredient.&lt;br /&gt;&lt;br /&gt;Wagyu beef is from a breed of cow specially raised to increase its percentage of fat marbling to consistently high levels. More marbling leads to more flavor, tenderness, and moisture as the fat melts during the cooking process. This wagyu beef is from domestic cattle that are descendants from Japanese herds and raised in the United States. Their intricately marbled beef (commonly known as &quot;Kobe beef&quot;, American Kobe beef or Kobe-style beef) is legendary and the result of careful breeding and a highly regimented diet. That marbling creates beef that is the most tender, juicy, and flavorful available.&lt;br /&gt;&lt;br /&gt;</g:description>
+//     <g:link>https://www.marxfoods.com/wagyu-outer-skirt-steaks</g:link>
+//     <g:availability>in stock</g:availability>
+//     <g:price>362 USD</g:price>
+//     <g:google_product_category>Food, Beverages &amp; Tobacco &amp;gt; Food Items &amp;gt; Meat, Seafood &amp; Eggs &amp;gt; Meat</g:google_product_category>
+//     <g:product_type>Food, Beverages &amp; Tobacco &amp;gt; Food Items &amp;gt; Meat, Seafood &amp; Eggs &amp;gt; Meat</g:product_type>
+//     <g:identifier_exists>No</g:identifier_exists>
+//     <g:item_group_id>2397</g:item_group_id>
+//     <g:shipping_weight>1 lb</g:shipping_weight>
+// </item>
+// <item>
+//     <g:id>25205</g:id>
+//     <g:title>Wagyu Cowboy Steaks</g:title>
+//     <g:description>Cowboy steaks are bone-in ribeye chops beloved by steak fans for the big bold beefy flavor. The bone has been cleaned of meat &amp;amp; fat (&quot;frenched&quot;) for a more visually impressive presentation. These wagyu cowboy steaks are slightly larger and have a bit more meat compared to a standard ribeye steak. &lt;br /&gt;&lt;br /&gt;This wagyu beef (aka kobe-style beef) is from a breed of cattle descended from Japanese herds and specially raised in Texas to increase its percentage of fat marbling to consistently high levels. More marbling leads to more flavor, tenderness, and moisture as the fat melts during the cooking process. Thus, wagyu beef cowboy steaks are &lt;br /&gt;&lt;br /&gt;</g:description>
+//     <g:link>https://www.marxfoods.com/wagyu-cowboy-steak</g:link>
+//     <g:availability>in stock</g:availability>
+//     <g:price>434 USD</g:price>
+//     <g:google_product_category>Food, Beverages &amp; Tobacco &amp;gt; Food Items &amp;gt; Meat, Seafood &amp; Eggs &amp;gt; Meat</g:google_product_category>
+//     <g:product_type>Food, Beverages &amp; Tobacco &amp;gt; Food Items &amp;gt; Meat, Seafood &amp; Eggs &amp;gt; Meat</g:product_type>
+//     <g:identifier_exists>No</g:identifier_exists>
+//     <g:item_group_id>2397</g:item_group_id>
+//     <g:shipping_weight>1 lb</g:shipping_weight>
+// </item>`;
   
   let defaultObj = {
     id: 'id',
@@ -73,6 +117,7 @@ const parseXML = () => {
           itemObj.description = cleanArr.join(' ')
           // console.log('description: ', itemObj.description);
         }
+        
         if (itemChild[j] === 'g:link') {
           itemObj.link = itemChild[(j + 1)]
           // console.log('link: ', itemObj.link);
@@ -114,6 +159,7 @@ const parseXML = () => {
   
     let linkEndParse = itemObj.link.indexOf('?')
     let linkSlug = itemObj.link.slice(26, linkEndParse).replace(/-/g, " ")
+    let newImage_link = 'https://www.marxfoods.com/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/no_image_available.png';
     
     for (let attrname in defaultObj) {
         mergeObj[attrname] = defaultObj[attrname];
@@ -129,7 +175,7 @@ const parseXML = () => {
     }
 
     if (mergeObj.image_link === undefined) {
-      mergeObj['image_link'] = `www.ekrelerjk/${mergeObj.title.replace(/ /g, "-")}`
+      mergeObj['image_link'] = newImage_link
     }
     
     product.push(mergeObj)
@@ -141,6 +187,8 @@ const parseXML = () => {
   return product
 
 }
+
+// parseXML()
 
 
 fs.writeFile('newJsonFile.json', JSON.stringify(parseXML(), null, 1), function(err, result) {
