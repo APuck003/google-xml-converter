@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs')
 const jsonFile = require('./newJsonFile.json')
+const convert = require('xml-js')
 
 //   ----------node init-----------   //
 const app = express().use(cors());
@@ -51,8 +52,14 @@ let xmlOutput = mapDatafromJson(jsonFile);
 
 //   ----------turn json object (derived from xml) into xml-----------   //
 
-// const xmlOutput = 'Hello World'
-// console.log(xmlOutput) // string
+let xml = fs.readFileSync('./data/Google_Product_Feed_File_Meat_Yogi_23_march.xml', 'utf8')
+
+let result = convert.xml2json(xml, {compact: true, spaces: 4})
+// console.log(result)
+
+fs.writeFile('jsonFromXMLObject.json', result, function(err, result) {
+  if (err) console.log('error', err)
+})
 
 //   ----------SERVE VIEW TO MAIQUE -----------   //
 app.get('/', (req, res) => {

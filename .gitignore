@@ -23,7 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
-
+newJsonFile.json
+jsonFromXMLObject.json
+example.txt
 
 /data/Google_Product_Feed_File_Meat_Yogi_23_march.xml
 /data/Google_Product_Feed_File_Yogi_V7.0.xml
+/data/Google_Product_Feed_File_All_item_yogi_30_march_2020.xml
