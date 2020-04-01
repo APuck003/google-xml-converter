@@ -1,5 +1,4 @@
 const fs = require('fs')
-
 const getMethods = (obj) => {
     let props = new Set()
     let currentObj = obj
