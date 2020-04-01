@@ -38,7 +38,12 @@ const populateUndefinedTags = (item) => {
     if (!item.description) {
         item.description = link
     } else {
-        item.description = item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig)
+        // item.description = item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig)
+        item.description = item.description
+            .replace(/(<([^>]+)>)/gm, '')
+            .replace(/(&.+;)/ig)
+            .replace(/[^A-za-z]/gm, " ")
+            .replace(/\s\s+/g, ' ')
     }
     
     if (!item.image_link) {
@@ -96,9 +101,7 @@ const getTitleByTag = (items) => {
 const getDescriptionByTag = (items) => {
     let descriptions = []
     items.map((item) => {
-        // console.log([item])
-        // console.log(item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig))
-        // descriptions.push(item.description.replace(/(<([^>]+)>)/ig, ''))
+        // console.log(item.description.replace(/(<([^>]+)>)/gm, '').replace(/(&.+;)/ig).replace(/[^A-za-z]/gm, " "))
         descriptions.push(item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig))
     })
     return descriptions
@@ -172,6 +175,7 @@ const getDescriptionByTag = (items) => {
 // console.log(getTitleByTag(itemsArray))
 // console.log(getIdByTag(itemsArray))
 // console.log(sterilizeData(itemsArray).length)
+
 
 fs.writeFile('newJsonFile.json', JSON.stringify(sterilizeData(itemsArray), null, 1), function(err, result) {
   if (err) console.log('error', err)

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const convert = require('xml-js')
 
-const xmlFile = './data/Google_Product_Feed_File_All_item_yogi_30_march_2020.xml'
+const xmlFile = 'data/Google_Product_Feed_File_final_30_march_2020_yogi.xml'
 
 let xml = fs.readFileSync(xmlFile, 'utf8')
 
