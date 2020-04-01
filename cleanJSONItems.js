@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 const getMethods = (obj) => {
     let props = new Set()
     let currentObj = obj
@@ -36,6 +38,8 @@ const populateUndefinedTags = (item) => {
     
     if (!item.description) {
         item.description = link
+    } else {
+        item.description = item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig)
     }
     
     if (!item.image_link) {
@@ -65,7 +69,7 @@ const sterilizeData = (data) => {
     return newDataArray
 }
 
-itemsArray = sterilizeData(itemsArray)
+// itemsArray = sterilizeData(itemsArray)
 
 const getIdByTag = (items) => {
     let ids = []
@@ -94,13 +98,15 @@ const getDescriptionByTag = (items) => {
     let descriptions = []
     items.map((item) => {
         // console.log([item])
-        console.log(item.description.replace(/(<([^>]+)>)/ig, '')).replace(/(&.+;)/ig)
+        // console.log(item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig))
         // descriptions.push(item.description.replace(/(<([^>]+)>)/ig, ''))
+        descriptions.push(item.description.replace(/(<([^>]+)>)/ig, '').replace(/(&.+;)/ig))
     })
-    // return descriptions
+    return descriptions
     // console.log(descriptions)
 }
 
+// getDescriptionByTag(itemsArray)
 
 // const getGoogleProductCategoryByTag = (items) => {
 //     let googleProducts = []
@@ -167,3 +173,7 @@ const getDescriptionByTag = (items) => {
 // console.log(getTitleByTag(itemsArray))
 // console.log(getIdByTag(itemsArray))
 // console.log(sterilizeData(itemsArray).length)
+
+fs.writeFile('newJsonFile.json', JSON.stringify(sterilizeData(itemsArray), null, 1), function(err, result) {
+  if (err) console.log('error', err)
+})

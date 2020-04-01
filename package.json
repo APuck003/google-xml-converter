@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "convert": "node xml-to-json.js",
-    "map": "node mapFromJSON.js",
+    "convert": "node cleanJSONItems.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
