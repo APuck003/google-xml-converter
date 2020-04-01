@@ -8,7 +8,6 @@ const getMethods = (obj) => {
 }
 
 let jsonObject = require('./jsonFromXMLObject.json')
-
 let itemsArray = jsonObject.rss.channel.item
 
 const dataState = {
@@ -27,6 +26,8 @@ const dataState = {
 }
 
 const populateUndefinedTags = (item) => {
+    let replacementImageLink = 'https://www.marxfoods.com/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/no_image_available.png';
+    
     let link = item.link.split('.com/').pop().split('?')[0].split('-').join(' ')
     
     if (!item.title) {
@@ -35,6 +36,10 @@ const populateUndefinedTags = (item) => {
     
     if (!item.description) {
         item.description = link
+    }
+    
+    if (!item.image_link) {
+        item.image_link = replacementImageLink
     }
     
     return item
@@ -60,6 +65,7 @@ const sterilizeData = (data) => {
     return newDataArray
 }
 
+itemsArray = sterilizeData(itemsArray)
 
 const getIdByTag = (items) => {
     let ids = []
@@ -84,9 +90,38 @@ const getTitleByTag = (items) => {
 // TODO: Make sure only HTML in description is cleaned
 // TODO: Build function to handle parent-child item_group_id relationship
 
-// const getDescriptionByTag = (tag) => {
-//     let descriptions = []
+const getDescriptionByTag = (items) => {
+    let descriptions = []
+    items.map((item) => {
+        // console.log([item])
+        console.log(item.description.replace(/(<([^>]+)>)/ig, '')).replace(/(&.+;)/ig)
+        // descriptions.push(item.description.replace(/(<([^>]+)>)/ig, ''))
+    })
+    // return descriptions
+    // console.log(descriptions)
+}
+
+
+// const getGoogleProductCategoryByTag = (items) => {
+//     let googleProducts = []
+//
+//     items.map((item) => {
+//         // let mapArray = item.split(" ").map(a) => {
+//         //     a.replace('&','&amp:');
+//         // };
+//         // console.log(mapArray)
+//         // console.log(item.google_product_category)
+//         // console.log(item.google_product_category.replace(/(&.+;)/g, ''))
+//         // console.log(item.google_product_category.split(' ').toString().replace('&', '&amp;').join(' '))
+//         // googleProducts.push(item.google_product_category)
+//     })
+//     // return titles
 // }
+//
+// getGoogleProductCategoryByTag(itemsArray)
+
+// getDescriptionByTag(itemsArray)
+
 //
 // const getLinkByTag = (tag) => {
 //
@@ -131,4 +166,4 @@ const getTitleByTag = (items) => {
 // console.log(itemsArray)
 // console.log(getTitleByTag(itemsArray))
 // console.log(getIdByTag(itemsArray))
-console.log(sterilizeData(itemsArray))
+// console.log(sterilizeData(itemsArray).length)

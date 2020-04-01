@@ -85,9 +85,6 @@ const parseXML = () => {
   
   let file = fs.readFileSync(__dirname + '/data/Google_Product_Feed_File_Meat_Yogi_23_march.xml')
   
-  
-  
-  
   // let product = []
   // for (let i = 1; i < itemArr.length; i++) {
   //   if (itemArr[i]) {
